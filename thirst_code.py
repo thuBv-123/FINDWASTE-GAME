@@ -748,6 +748,7 @@ class Game:
                 return True 
             # nếu nhấn nút 'home'
             if self.buttons['home'].draw():
+                self.level = 0
                 self.game_over = False
                 self.game_paused = True
                 game_over_sound.stop()
@@ -774,6 +775,7 @@ class Game:
                 self.reset_level()
                 return True 
             if self.buttons['home'].draw():
+                self.level = 0 
                 self.game_won = False
                 self.game_paused = True
                 sowing_sound.stop()
@@ -814,7 +816,11 @@ class Game:
             print('Alrealy at the last level!')  
      # vẽ menu trò chơi  
      def draw_menu(self):
-             if not pygame.mixer.music.get_busy():
+             self.game_pause = True
+             for obj in self.levels[self.level]['objects']:
+                obj.rect.x = obj.start_x
+                obj.rect.y = obj.start_y 
+             if self.level == 0 and not pygame.mixer.music.get_busy():
                  pygame.mixer.music.play(-1, 0.0)
              screen.blit(background_menu_level, (0, 0))
              # vẽ nút quay lại màn hình chính
