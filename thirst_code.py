@@ -243,12 +243,12 @@ class Game:
                    ]
         self.organic_wastes_level_2 = [
              Object(347,608,bánh_mì_mốc, 0.4),Object(532,666, bánh_quy_thừa, 0.3),
-             Object(646,692, apple_core, 1.5),Object(668,738, vỏ_táo, 0.06)
+             Object(646,692, apple_core, 1.5),Object(668,738, vỏ_táo, 1.5)
                    ]
         #danh sách rác tái chế
         self.Recycled_Waste_level_2 = [
              Object(1035,665, cốc_nước_thừa, 0.4),Object(392,522,chai_nước_khoáng, 0.3),
-             Object(859,730,sách_cũ, 0.5),Object(13,603, plastic_bottle, 1)
+             Object(859,730,sách_cũ, 0.2),Object(13,603, plastic_bottle, 1)
                    ]
         #danh sách rác không thuộc hai nhóm trên
         self.other_waste_level_2 = [
