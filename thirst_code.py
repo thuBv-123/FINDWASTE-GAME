@@ -210,7 +210,7 @@ level4_button = Button(1160,380,level4_img,1)
 level5_button = Button(770,480,level5_img,1)
 replay_button = Button(690,600,replay_img, 0.7)
 home_button = Button(480,600,home_img,0.08)
-continue_button = Button(770,480,continue_img,1)
+continue_button = Button(600,900,continue_img,0.67)
 #tuy nhiên nó vẫn ch được hiện lên vì ta ch gọi phương thức vẽ lên chúng , ta sẽ tạo vòng lặp ở bước sau
 # tải các background
 background =pygame.image.load('images/Add a healing.png').convert_alpha()
