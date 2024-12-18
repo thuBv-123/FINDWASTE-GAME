@@ -103,7 +103,7 @@ trứng_vịt= Object(1000,569, trứng_vịt_img , 0.5)
 trứng= Object(1000,569, trứng_img , 0.5)
 vỉ_thuốc= Object(1000,569, vỉ_thuốc_img , 0.5)
 vỉ_trứng= Object(1000,569, vỉ_trứng_img , 0.5)
-
+health_bar = Object(4,1, healthbar , 0.5)
 # danh sách rác thải thực phẩm:
 fish_bone = pygame.image.load('images/fish bone.png').convert_alpha()
 apple_core =  pygame.image.load('images/apple core.png').convert_alpha()
@@ -317,9 +317,11 @@ class Game:
             thùng_rác_khác,
             nắp_thùng_rác_tp,
             nắp_thùng_rác_tc,
-            nắp_thùng_rác_khác,
+            nắp_thùng_rác_khác,health_bar,
             garbage_bags,bánh_mì,bình_cồn_y_tế,cục_xà_phòng,chai_mứt,kem_ốc_quế,kem_ốc_quế_2,kem_tràng_tiền,phô_mai,trứng_vịt,trứng,vỉ_thuốc,vỉ_trứng
                ]
+        self.health_bar = HealthBar(10,10,200,20,100)
+        self.health_bar.take_damage(1)
         # tạo các level
         self.levels =  {
              0: {
@@ -331,35 +333,35 @@ class Game:
             1:{
                'objects':self.organic_wastes_level_1 + self.Recycled_Waste_level_1 +  self.other_waste_level_1,
                'background':background_level_1,
-               'win_condition': lambda: all (obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']),
+               'win_condition': lambda: all (obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']) or (sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) in [1, 2] and all(obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects'] if not (obj.rect.x > 1900 and obj.rect.y > 1900))),
                'game_over_condition': lambda:sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) == 3
         
               },
             2:{
                'objects': self.organic_wastes_level_2 + self.Recycled_Waste_level_2 +  self.other_waste_level_2,
                'background':background_level_2,
-               'win_condition': lambda: all(obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']),
+               'win_condition': lambda: (obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']) or (sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) in [1, 2] and all(obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects'] if not (obj.rect.x > 1900 and obj.rect.y > 1900))),
                'game_over_condition': lambda: sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) == 3
         
               },
             3:{
                'objects': self.organic_wastes_level_3 + self.Recycled_Waste_level_3 +  self.other_waste_level_3,
                'background':background_level_3,
-               'win_condition': lambda: all(obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']),
+               'win_condition': lambda:(obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']) or (sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) in [1, 2] and all(obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects'] if not (obj.rect.x > 1900 and obj.rect.y > 1900))),
                'game_over_condition': lambda: sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) == 3
         
               },
             4:{
                'objects': self.organic_wastes_level_4 + self.Recycled_Waste_level_4 +  self.other_waste_level_4,
                'background':background_level_4,
-               'win_condition': lambda: all(obj.rect.x  < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']),
+               'win_condition': lambda: (obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']) or (sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) in [1, 2] and all(obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects'] if not (obj.rect.x > 1900 and obj.rect.y > 1900))),
                'game_over_condition': lambda: sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) == 3
         
               },
             5:{
                'objects': self.organic_wastes_level_5 + self.Recycled_Waste_level_5 +  self.other_waste_level_5,
                'background':background_level_5,
-               'win_condition': lambda: all(obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']),
+               'win_condition': lambda: (obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects']) or (sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) in [1, 2] and all(obj.rect.x < 0 and obj.rect.y < 0 for obj in self.levels[self.level]['objects'] if not (obj.rect.x > 1900 and obj.rect.y > 1900))),
                'game_over_condition': lambda: sum(1 for obj in self.levels[self.level]['objects'] if obj.rect.x > 1900 and obj.rect.y > 1900) == 3
         
               }
@@ -380,6 +382,7 @@ class Game:
         }
      # hàm quay lại level nếu người chơi nhấp'replay'   
      def reset_level(self):
+        self.health_bar.hp = 100  
         for obj in self.levels[self.level]['objects']:
             obj.rect.x = obj.start_x
             obj.rect.y = obj.start_y 
@@ -391,7 +394,9 @@ class Game:
         screen.blit( self.levels[self.level]['background'], (0, 0))      
         # xử lý điều kiện giữa các obj:
         for obj in  self.levels[self.level]['objects']:
+            self.health_bar.hp = 100 
             obj.draw()
+            health_bar.draw() 
             # tại level 1
             if obj in self.organic_wastes_level_1:    
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
@@ -404,6 +409,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -411,6 +417,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -419,6 +426,7 @@ class Game:
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
                     offset = (nắp_thùng_rác_tp.rect.x - obj.rect.x, nắp_thùng_rác_tp.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tp.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -433,6 +441,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -441,6 +450,7 @@ class Game:
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
                     offset = (nắp_thùng_rác_tp.rect.x - obj.rect.x, nắp_thùng_rác_tp.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tp.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -448,6 +458,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40)
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -471,6 +482,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40)  
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -478,6 +490,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -486,6 +499,7 @@ class Game:
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
                     offset = (nắp_thùng_rác_tp.rect.x - obj.rect.x, nắp_thùng_rác_tp.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tp.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -500,6 +514,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -515,6 +530,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -538,6 +554,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -545,6 +562,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -553,6 +571,7 @@ class Game:
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
                     offset = (nắp_thùng_rác_tp.rect.x - obj.rect.x, nắp_thùng_rác_tp.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tp.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -567,6 +586,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -575,6 +595,7 @@ class Game:
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
                     offset = (nắp_thùng_rác_tp.rect.x - obj.rect.x, nắp_thùng_rác_tp.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tp.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -582,6 +603,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40)   
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -605,6 +627,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -612,6 +635,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -620,6 +644,7 @@ class Game:
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
                     offset = (nắp_thùng_rác_tp.rect.x - obj.rect.x, nắp_thùng_rác_tp.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tp.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40)  
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -634,6 +659,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -642,6 +668,7 @@ class Game:
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
                     offset = (nắp_thùng_rác_tp.rect.x - obj.rect.x, nắp_thùng_rác_tp.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tp.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -649,6 +676,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -672,6 +700,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -679,6 +708,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -687,6 +717,7 @@ class Game:
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
                     offset = (nắp_thùng_rác_tp.rect.x - obj.rect.x, nắp_thùng_rác_tp.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tp.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -701,6 +732,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_khác.rect):
                     offset = (nắp_thùng_rác_khác.rect.x - obj.rect.x, nắp_thùng_rác_khác.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_khác.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40)     
                         obj.rect.x = 2000 
                         obj.rect.y = 2000
                         false_sound.play()
@@ -709,6 +741,7 @@ class Game:
                 if obj.rect.colliderect(nắp_thùng_rác_tp.rect):
                     offset = (nắp_thùng_rác_tp.rect.x - obj.rect.x, nắp_thùng_rác_tp.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tp.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -716,6 +749,7 @@ class Game:
                 elif obj.rect.colliderect(nắp_thùng_rác_tc.rect):
                     offset = (nắp_thùng_rác_tc.rect.x - obj.rect.x, nắp_thùng_rác_tc.rect.y - obj.rect.y)
                     if obj.mask.overlap(nắp_thùng_rác_tc.mask, offset):
+                        self.health_bar.hp = max(0, self.health_bar.hp - 40) 
                         obj.rect.x = 2000
                         obj.rect.y = 2000
                         false_sound.play()
@@ -741,6 +775,7 @@ class Game:
             game_over_sound.play()
             # nếu nhấn nút 'replay'
             if self.buttons['replay'].draw():
+                self.health_bar.hp = 100 
                 self.game_over = False
                 game_over_sound.stop()
                 pygame.mixer.music.stop()
@@ -749,6 +784,7 @@ class Game:
             # nếu nhấn nút 'home'
             if self.buttons['home'].draw():
                 self.level = 0
+                self.health_bar.hp = 100
                 self.game_over = False
                 self.game_paused = True
                 game_over_sound.stop()
@@ -767,6 +803,7 @@ class Game:
             win_sound.set_volume(1) 
             pygame.mixer.music.stop()
             if self.buttons['replay'].draw():
+                self.health_bar.hp = 100 
                 self.game_won = False
                 sowing_sound.stop()
                 win2_sound.stop()
@@ -775,6 +812,7 @@ class Game:
                 self.reset_level()
                 return True 
             if self.buttons['home'].draw():
+                 self.health_bar.hp = 100
                 self.level = 0 
                 self.game_won = False
                 self.game_paused = True
@@ -783,6 +821,7 @@ class Game:
                 win_sound.stop()
                 pygame.mixer.music.stop()
                 self.draw_menu()
+                return True 
             if self.buttons['continue'].draw():
                 self.game_won = False
                 sowing_sound.stop()
@@ -800,6 +839,7 @@ class Game:
         return self.levels[self.level]['win_condition']()
      # hàm xảy ra nếu nhấn vào nút ' next'
      def next_level(self):
+        self.health_bar.hp = 100  
         # tất cả các vật trong level mới ở vị trí ban đầu:
         for obj in self.levels[self.level]['objects']:
             obj.rect.x = obj.start_x
@@ -811,12 +851,13 @@ class Game:
         if self.level < len(self.levels) - 1:
             self.level += 1
             self.game_paused = False
-            self.update_timer()
         else:
             print('Alrealy at the last level!')  
      # vẽ menu trò chơi  
      def draw_menu(self):
+             self.health_bar.hp = 100
              self.game_pause = True
+             screen.blit(background_menu_level, (0, 0))
              for obj in self.levels[self.level]['objects']:
                 obj.rect.x = obj.start_x
                 obj.rect.y = obj.start_y 
@@ -881,10 +922,33 @@ class Game:
         game_won = False
         
         draw_menu()
+Class HealthBar() :
+    def __init__(self, x, y, w, h, max_hp):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.hp = max_hp
+        self.max_hp = max_hp    
+    def draw(self, surface):
+        ratio = self.hp / self.max_hp
+        pygame.draw.rect(surface, 'black', (self.x, self.y, self.w, self.h))
+        pygame.draw.rect(surface, 'pink', (self.x, self.y, self.w * ratio, self.h))
+    def take_damage(self, damage):
+        self.hp -= damage
+        if self.hp < 0:
+            self.hp = 0  # Prevent health from going below 0
+
+    def heal(self, amount):
+        self.hp += amount
+        if self.hp > self.max_hp:
+            self.hp = self.max_hp          
 # chạy game
 def main():
         game = Game()
+        health_bar = HealthBar(250,200,300,40,100)
         while True:
+            health_bar.take_damage(1)
             game.draw()
             if game.level == 0 :
                 if background_menu_level: # nếu ta có background thì có thể thay thế vào nó
